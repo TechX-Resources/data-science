@@ -1,10 +1,10 @@
-# LLM from Scratch Cohort
+# Data Science Cohort
 
-Welcome to the LLM from Scratch cohort! This repository contains resources, code, and materials for learning about Large Language Models from the ground up.
+Welcome to the Data Science cohort! This repository contains resources, code, and materials for a smooth learning and onboarding process.
 
 ## 🎯 Overview
 
-This cohort is designed to help you understand and implement Large Language Models from scratch. We'll cover everything from the fundamentals of building and fine-tuning your own LLM. You will each work on a use-case that you will do end-to-end with your teammates.
+This cohort is designed to help you understand and implement Machine Learning and Artificial Intellignece Models from scratch. We'll cover everything from the fundamentals of building and training your own models. You will each work on a use-case that you will do end-to-end with your teammates.
 
 ## 💻 Development Environment Setup
 
@@ -61,153 +61,9 @@ This cohort is designed to help you understand and implement Large Language Mode
      python -c "import torch; print(torch.cuda.is_available())"
      ```
 
-## 🤖 LLM Integration Examples
 
-### 1. Claude 3.5 Sonnet (via Anthropic)
-```python
-from anthropic import Anthropic
-
-def setup_claude():
-    client = Anthropic(api_key="your-api-key")
-    return client
-
-def get_claude_response(prompt):
-    client = setup_claude()
-    try:
-        response = client.messages.create(
-            model="claude-3-sonnet-20240229",
-            max_tokens=1000,
-            messages=[{"role": "user", "content": prompt}]
-        )
-        return response.content[0].text
-    except Exception as e:
-        print(f"Error: {e}")
-        return None
-```
-
-### 2. Gemini 1.5 Pro (via Google AI Studio)
-```python
-import google.generativeai as genai
-
-def setup_gemini():
-    genai.configure(api_key="your-api-key")
-    model = genai.GenerativeModel('gemini-1.5-pro')
-    return model
-
-def get_gemini_response(prompt):
-    model = setup_gemini()
-    try:
-        response = model.generate_content(prompt)
-        return response.text
-    except Exception as e:
-        print(f"Error: {e}")
-        return None
-```
-
-### 3. GPT-4 (via OpenAI)
-```python
-from openai import OpenAI
-
-def setup_gpt4():
-    client = OpenAI(api_key="your-api-key")
-    return client
-
-def get_gpt4_response(prompt):
-    client = setup_gpt4()
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=1000
-        )
-        return response.choices[0].message.content
-    except Exception as e:
-        print(f"Error: {e}")
-        return None
-```
-
-### 4. Llama 3 70B (Local Installation)
-```python
-from transformers import AutoModelForCausalLM, AutoTokenizer
-import torch
-
-def setup_llama():
-    model_name = "meta-llama/Llama-2-70b-chat-hf"
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(
-        model_name,
-        torch_dtype=torch.float16,
-        device_map="auto",
-        load_in_4bit=True  # Enable 4-bit quantization
-    )
-    return model, tokenizer
-
-def get_llama_response(prompt, max_length=100):
-    model, tokenizer = setup_llama()
-    try:
-        inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-        outputs = model.generate(
-            **inputs,
-            max_length=max_length,
-            num_return_sequences=1,
-            temperature=0.7
-        )
-        return tokenizer.decode(outputs[0], skip_special_tokens=True)
-    except Exception as e:
-        print(f"Error: {e}")
-        return None
-```
-
-### 5. Inflection-2.5 / Pi
-```python
-from inflection import InflectionClient
-
-def setup_pi():
-    client = InflectionClient(api_key="your-api-key")
-    return client
-
-def get_pi_response(prompt):
-    client = setup_pi()
-    try:
-        response = client.chat.create(
-            model="inflection-2.5",
-            messages=[{"role": "user", "content": prompt}]
-        )
-        return response.choices[0].message.content
-    except Exception as e:
-        print(f"Error: {e}")
-        return None
-```
 
 ## 💡 Best Practices & Tips
-
-### API Client Initialization
-```python
-# Best Practice: Use environment variables for API keys
-import os
-from dotenv import load_dotenv
-
-load_dotenv()  # Load environment variables from .env file
-
-# Initialize clients with proper error handling
-def initialize_api_clients():
-    clients = {}
-    try:
-        # OpenAI
-        clients['openai'] = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-        
-        # Anthropic
-        clients['anthropic'] = Anthropic(api_key=os.getenv('ANTHROPIC_API_KEY'))
-        
-        # Google
-        genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
-        clients['google'] = genai.GenerativeModel('gemini-1.5-pro')
-        
-        return clients
-    except Exception as e:
-        logger.error(f"Failed to initialize API clients: {e}")
-        raise
-```
 
 ### Memory-Efficient Model Loading
 ```python
@@ -272,19 +128,7 @@ def retry_on_failure(max_retries=3, delay=1):
 
 ### Tips and Tricks
 
-1. **API Rate Limiting**
-   ```python
-   from ratelimit import limits, sleep_and_retry
-   
-   # Rate limit: 50 calls per minute
-   @sleep_and_retry
-   @limits(calls=50, period=60)
-   def rate_limited_api_call():
-       # Your API call here
-       pass
-   ```
-
-2. **Caching Responses**
+1. **Caching Responses**
    ```python
    from functools import lru_cache
    
@@ -294,7 +138,7 @@ def retry_on_failure(max_retries=3, delay=1):
        pass
    ```
 
-3. **Batch Processing**
+2. **Batch Processing**
    ```python
    def process_batch(prompts, batch_size=32):
        results = []
@@ -305,7 +149,7 @@ def retry_on_failure(max_retries=3, delay=1):
        return results
    ```
 
-4. **Memory Management**
+3. **Memory Management**
    ```python
    import gc
    
